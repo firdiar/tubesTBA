@@ -59,59 +59,14 @@ public class TubesTBA {
         if(isSubject(kata)){
             return 's';
         }
-        if(kata.equals("main")){
+        if(isPredikat(kata)){
             return 'p';
         }
         return kata.charAt(0);
     }
-    
-    public static boolean isSubject(String kata){
-        boolean s=false;
-
-            if(kata.charAt(0)=='a'){
-               if(kata.charAt(1)=='k'){
-                   if(kata.charAt(2)=='u'){
-                       s=true;
-                     }
-               }
-            }
-            if(kata.charAt(0)=='d'){
-               if(kata.charAt(1)=='i'){
-                   if(kata.charAt(2)=='a'){
-                       s=true;
-                   }
-               }
-            }
-             if(kata.charAt(0)=='k'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='m'){
-                      if(kata.charAt(3)=='u')
-                          s=true;
-                   }
-               }
-            }
-             if(kata.charAt(0)=='k'){
-               if(kata.charAt(1)=='i'){
-                   if(kata.charAt(2)=='t'){
-                      if(kata.charAt(3)=='a')
-                          s=true;
-                   }
-               }
-            }
-             if(kata.charAt(0)=='s'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='y'){
-                      if(kata.charAt(3)=='a')
-                          s=true;
-                   }
-               }
-            }
-            return s;  
-            
-    }
 
     public static List<String> parseString(String kalimat){
-        //String[] kata = kalimat.split(" ");
+        kalimat = kalimat.toLowerCase();
         int i=0;
         String temp = "";
         List<String> kata = new ArrayList<>();
@@ -175,11 +130,103 @@ public class TubesTBA {
     
     }
     
+    public static boolean isSubject(String kata){
+        boolean s=false;
+
+            if(kata.charAt(0)=='a'){
+               if(kata.charAt(1)=='k'){
+                   if(kata.charAt(2)=='u'){
+                       s=true;
+                     }
+               }
+            }
+            if(kata.charAt(0)=='d'){
+               if(kata.charAt(1)=='i'){
+                   if(kata.charAt(2)=='a'){
+                       s=true;
+                   }
+               }
+            }
+             if(kata.charAt(0)=='k'){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='m'){
+                      if(kata.charAt(3)=='u')
+                          s=true;
+                   }
+               }
+            }
+             if(kata.charAt(0)=='k'){
+               if(kata.charAt(1)=='i'){
+                   if(kata.charAt(2)=='t'){
+                      if(kata.charAt(3)=='a')
+                          s=true;
+                   }
+               }
+            }
+             if(kata.charAt(0)=='s'){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='y'){
+                      if(kata.charAt(3)=='a')
+                          s=true;
+                   }
+               }
+            }
+            return s;  
+            
+    }
+    
+    public static boolean isPredikat(String kata){
+        boolean s=false;
+
+            if(kata.charAt(0)=='m' && kata.length()>=4){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='i'){
+                       if(kata.charAt(3)=='n'){
+                            s=true;
+                        }
+                   }
+                   if(kata.charAt(2)=='k'){
+                       if(kata.charAt(3)=='a'){
+                           if(kata.length()>4 && kata.charAt(4)=='n'){
+                            s=true;
+                            }
+                        }
+                   }
+                   if(kata.charAt(2)=='n'){
+                       if(kata.charAt(3)=='d'){
+                           if(kata.length()>4 &&kata.charAt(4)=='i'){
+                            s=true;
+                            }
+                        }
+                   }
+                   if(kata.charAt(2)=='r'){
+                       if(kata.charAt(3)=='a'){
+                           if(kata.length()>4 &&kata.charAt(4)=='h'){
+                            s=true;
+                            }
+                        }
+                   }
+               }
+               if(kata.charAt(1)=='i'){
+                   if(kata.charAt(2)=='n'){
+                       if(kata.charAt(3)=='u'){
+                           if(kata.length()>4 &&kata.charAt(4)=='m'){
+                                s=true;
+                            }
+                        }
+                   }
+               }
+            }
+          
+            return s;  
+            
+    }
+    
     //Subjek
     // aku kamu dia saya kita
     
     //predikat
-    //memainkan mengerjakan memberikan memakan meminum
+    //main makan minum mandi marah
     
     //objek
     //bola tugas hadiah kue soda
