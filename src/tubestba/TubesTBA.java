@@ -5,6 +5,8 @@
  */
 package tubestba;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.Scanner;
 
@@ -25,7 +27,7 @@ public class TubesTBA {
         System.out.println("Masukan Sebuah Kalimat");
         Scanner scanner = new Scanner( System.in );
         String kalimat = scanner.nextLine();
-        String[] kata = parseString(kalimat);
+        List<String> kata = parseString(kalimat);
         
         Stack<Character> stack = new Stack<>();
         stack.add('#');
@@ -37,8 +39,8 @@ public class TubesTBA {
         boolean stillCan = true;
         int i = 0;
         //System.out.println(processStack(stack, "s" , stack.pop()));
-        while(stillCan && i<kata.length){
-            stillCan = processStack(stack, tokenRecognizer(kata[i]) , stack.pop());
+        while(stillCan && i<kata.size()){
+            stillCan = processStack(stack, tokenRecognizer(kata.get(i)) , stack.pop());
             i++;
         }
         
@@ -56,25 +58,24 @@ public class TubesTBA {
     public static Character tokenRecognizer(String kata){
         return kata.charAt(0);
     }
-    public static String[] parseString(String kalimat){
-        String[] kata = kalimat.split(" ");
+    public static List<String> parseString(String kalimat){
+        //String[] kata = kalimat.split(" ");
+        int i=0;
+        String temp = "";
+        List<String> kata = new ArrayList<>();
         
-        String[] kata2;
-        if(kata.length >= 1){
-            kata2 = new String[kata.length-1];
-        }else{
-            kata2 = new String[kata.length];
-        }
-        
-        for(int i=0;i<kata.length ; i++){
-            if(kata[i].equals("di") && i+1 == kata.length-1){
-                kata2[i] = kata[i] +" "+kata[i+1];
-                i++;
-            }else{
-                kata2[i] = kata[i];
+        while(i < kalimat.length()){
+            if(kalimat.charAt(i) != ' '){
+               temp += kalimat.charAt(i);
+            }else if(kalimat.charAt(i) == ' '&& !temp.equals("di")){
+                kata.add(temp);
+                temp = "";
             }
+            i++;
         }
-        return kata2 ;
+        kata.add(temp);
+        
+        return kata;
     }
     
     public static void emptyStack(Stack<Character> stack){
@@ -98,7 +99,7 @@ public class TubesTBA {
                 stack.add('Y');
                 return true;
             }else if(input.equals('k')){
-                stack.add('Y'); //edited
+                
                 return true;
             }else if(input.equals(Character.MIN_VALUE)){
                 return true;
@@ -108,7 +109,7 @@ public class TubesTBA {
             if(input.equals(Character.MIN_VALUE)){
                 return true;
             }else if(input.equals( 'k')){
-                stack.add('Y'); // edited
+                
                 return true;
             }
             return false;
