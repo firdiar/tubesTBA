@@ -73,7 +73,7 @@ public class TubesTBA {
         if(isPredikat(kata)){
             return 'p';
         }
-        return kata.charAt(0);
+        return Character.MIN_VALUE;
     }
 
 
