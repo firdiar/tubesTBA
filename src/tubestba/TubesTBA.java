@@ -57,9 +57,24 @@ public class TubesTBA {
         return kata.charAt(0);
     }
     public static String[] parseString(String kalimat){
-//        String[] parse = kalimat.split(" ");
-//        if(parse.length > 3)
-        return kalimat.split(" ");
+        String[] kata = kalimat.split(" ");
+        
+        String[] kata2;
+        if(kata.length >= 1){
+            kata2 = new String[kata.length-1];
+        }else{
+            kata2 = new String[kata.length];
+        }
+        
+        for(int i=0;i<kata.length ; i++){
+            if(kata[i].equals("di") && i+1 == kata.length-1){
+                kata2[i] = kata[i] +" "+kata[i+1];
+                i++;
+            }else{
+                kata2[i] = kata[i];
+            }
+        }
+        return kata2 ;
     }
     
     public static void emptyStack(Stack<Character> stack){
@@ -104,6 +119,18 @@ public class TubesTBA {
         return false;
     
     }
+    
+    //Subjek
+    // aku kamu dia saya kita
+    
+    //predikat
+    //memainkan mengerjakan memberikan memakan meminum
+    
+    //objek
+    //bola tugas hadiah kue soda
+    
+    //keterangan
+    //di lapangan , di rumah , di kosan , di kantin , di kampus
     
     
 }
