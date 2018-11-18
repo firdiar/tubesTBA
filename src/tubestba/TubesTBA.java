@@ -59,11 +59,12 @@ public class TubesTBA {
         if(isSubject(kata)){
             return 's';
         }
-        if(kata.equals("main")){
-            return 'p';
+        if(isAdverb(kata)){
+            return 'k';
         }
         return kata.charAt(0);
     }
+    
     
     public static boolean isSubject(String kata){
         boolean s=false;
@@ -171,6 +172,87 @@ public class TubesTBA {
         
         return false;
     
+    }
+    public static boolean isAdverb(String kata){
+        boolean k= false;
+        
+        if (kata.charAt(0)=='d' && kata.charAt(1)=='i' && kata.charAt(2)==' '&& kata.length()>=8){
+           if(kata.charAt(3)=='k'){
+               if(kata.charAt(4)=='a'){
+                   if(kata.charAt(5)=='n'){
+                       if( kata.charAt(6)=='t'){
+                        if (kata.charAt(7)=='i'){
+                           if (kata.length()> 8 && kata.charAt(8)=='n'){
+                             k = true;
+                        }
+                       }
+                   }
+                     }
+               }
+            }
+           
+           if(kata.charAt(3)=='k'){
+               if(kata.charAt(4)=='a'){
+                   if(kata.charAt(5)=='m'){
+                       if( kata.charAt(6)=='p'){
+                        if (kata.charAt(7)=='u'){
+                           if (kata.length()> 8&& kata.charAt(8)=='s'){
+                             k = true; 
+                        }
+                       }
+                   }
+                     }
+               }
+            }
+           
+           
+           if(kata.charAt(3)=='r'){
+               if(kata.charAt(4)=='u'){
+                   if(kata.charAt(5)=='m'){
+                       if( kata.charAt(6)=='a'){
+                        if (kata.charAt(7)=='h'){
+                            k =true;
+                       }
+                   }
+                     }
+               }
+            }
+           
+           
+           if(kata.charAt(3)=='k'){
+               if(kata.charAt(4)=='o'){
+                   if(kata.charAt(5)=='s'){
+                       if( kata.charAt(6)=='a'){
+                        if (kata.charAt(7)=='n'){
+                           k =true;
+                        }
+                   }
+                     }
+               }
+            }
+           
+           
+           
+           if(kata.charAt(3)=='l'){
+               if(kata.charAt(4)=='a'){
+                   if(kata.charAt(5)=='p'){
+                       if( kata.charAt(6)=='a'){
+                        if (kata.charAt(7)=='n'){
+                           if (kata.length()> 10 &&kata.charAt(8)=='g'){
+                             if (kata.charAt(9)=='a'){
+                                 if (kata.charAt(10)=='n'){
+                             k = true;
+                        }
+                        }
+                        }
+                       }
+                   }
+                     }
+               }
+            }
+           
+        } 
+        return k;
     }
     
     //Subjek
