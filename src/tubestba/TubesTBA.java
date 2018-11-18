@@ -30,28 +30,82 @@ public class TubesTBA {
         List<String> kata = parseString(kalimat);
         
         Stack<Character> stack = new Stack<>();
-        stack.add('#');
-        stack.add('S');
-        processStack(stack, Character.MIN_VALUE , stack.pop());
+            
         
         
+        StatePDA init = new StatePDA("I");
+        StatePDA s = new StatePDA("s");
+        StatePDA q0 = new StatePDA("q0");
+        StatePDA q1 = new StatePDA("q1");
+        StatePDA q2 = new StatePDA("q2");
+        StatePDA q3 = new StatePDA("q3",true);
         
-        boolean stillCan = true;
+        init.addTransition(Character.MIN_VALUE, Character.MIN_VALUE, "S#", s);
+        
+        s.addTransition(Character.MIN_VALUE, 'S', "spX", q0);
+        
+        q0.addTransition('s', 's', "", q0);
+        q0.addTransition('p', 'p', "", q0);
+        q0.addTransition('o', 'X', "Y", q1);
+        q0.addTransition('k', 'X', "", q2);
+        q0.addTransition(Character.MIN_VALUE, 'X', "", q2);
+        
+        q1.addTransition(Character.MIN_VALUE, 'Y', "", q2);
+        q1.addTransition('k', 'Y', "", q2);
+        
+        q2.addTransition(Character.MIN_VALUE, '#', "", q3);
+        
+        
+        StatePDA current = init;
+        current = current.getNext(stack, Character.MIN_VALUE, Character.MIN_VALUE);
+        current = current.getNext(stack, Character.MIN_VALUE, stack.pop());
+        
         int i = 0;
-        //System.out.println(processStack(stack, "s" , stack.pop()));
-        while(stillCan && i<kata.size()){
-            stillCan = processStack(stack, tokenRecognizer(kata.get(i)) , stack.pop());
+        while(current!= null && i<kata.size()){
+            current = current.getNext(stack, tokenRecognizer(kata.get(i)), stack.pop());
             i++;
         }
         
-        
-        boolean isAccepted = false;
-        if(stillCan){
-            emptyStack(stack);
-            isAccepted = stack.isEmpty();
+        while(current != null && !stack.isEmpty()){
+            current = current.getNext(stack, Character.MIN_VALUE, stack.pop()); 
         }
         
-        System.out.println("Kata Di Terima : "+isAccepted);
+        
+        if(current != null){
+            System.out.println("Kata Diterima : "+current.isFinal());
+        }else{
+            System.out.println("Kata Diterima : false");
+        }
+        
+        
+       
+        
+        
+        
+        
+//        stack.clear();
+//        stack.add('#');
+//        stack.add('S');
+//        processStack(stack, Character.MIN_VALUE , stack.pop());
+//        
+//        
+//        
+//        boolean stillCan = true;
+//        int j = 0;
+//        //System.out.println(processStack(stack, "s" , stack.pop()));
+//        while(stillCan && j<kata.size()){
+//            stillCan = processStack(stack, tokenRecognizer(kata.get(j)) , stack.pop());
+//            j++;
+//        }
+//        
+//        
+//        boolean isAccepted = false;
+//        if(stillCan){
+//            emptyStack(stack);
+//            isAccepted = stack.isEmpty();
+//        }
+//        
+//        System.out.println("Kata Di Terima : "+isAccepted);
         
     }
     
@@ -100,48 +154,48 @@ public class TubesTBA {
         return kata;
     }
     
-    public static void emptyStack(Stack<Character> stack){
-        
-        boolean stillCan = true;
-        while (stillCan && !stack.isEmpty()) {            
-            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
-        }
-    
-    }
+//    public static void emptyStack(Stack<Character> stack){
+//        
+//        boolean stillCan = true;
+//        while (stillCan && !stack.isEmpty()) {            
+//            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
+//        }
+//    
+//    }
     
     //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
-    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
-        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
-            stack.add('X');
-            stack.add('p');
-            stack.add('s');
-            return true;
-        }else if(pop.equals('X')){
-            if(input .equals( 'o')){
-                stack.add('Y');
-                return true;
-            }else if(input.equals('k')){
-                
-                return true;
-            }else if(input.equals(Character.MIN_VALUE)){
-                return true;
-            }
-            return false;
-        }else if(pop.equals('Y')){
-            if(input.equals(Character.MIN_VALUE)){
-                return true;
-            }else if(input.equals( 'k')){
-                
-                return true;
-            }
-            return false;
-        }else if(Character.isLowerCase(input) && input.equals( pop)){
-            return true;
-        }
-        
-        return false;
-    
-    }
+//    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
+//        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
+//            stack.add('X');
+//            stack.add('p');
+//            stack.add('s');
+//            return true;
+//        }else if(pop.equals('X')){
+//            if(input .equals( 'o')){
+//                stack.add('Y');
+//                return true;
+//            }else if(input.equals('k')){
+//                
+//                return true;
+//            }else if(input.equals(Character.MIN_VALUE)){
+//                return true;
+//            }
+//            return false;
+//        }else if(pop.equals('Y')){
+//            if(input.equals(Character.MIN_VALUE)){
+//                return true;
+//            }else if(input.equals( 'k')){
+//                
+//                return true;
+//            }
+//            return false;
+//        }else if(Character.isLowerCase(input) && input.equals( pop)){
+//            return true;
+//        }
+//        
+//        return false;
+//    
+//    }
     public static boolean isAdverb(String kata){
         boolean k= false;
         
