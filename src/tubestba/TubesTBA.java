@@ -59,15 +59,80 @@ public class TubesTBA {
         if(isSubject(kata)){
             return 's';
         }
-        if(kata.equals("main")){
-            return 'p';
+        if(isObject(kata)){
+            return 'o';
         }
         return kata.charAt(0);
     }
-    
+    public static boolean isObject(String kata){
+        boolean s=false;
+            
+        if(kata.length()==4){
+             if(kata.charAt(0)=='s'){
+               if(kata.charAt(1)=='o'){
+                   if(kata.charAt(2)=='d'){
+                       if(kata.charAt(3)=='a'){
+                       s=true;
+                       }
+                   }
+               }
+            }
+        }
+        if(kata.length()==3){
+            if(kata.charAt(0)=='k'){
+               if(kata.charAt(1)=='u'){
+                   if(kata.charAt(2)=='e'){
+                       s=true;
+                     }
+               }
+            }
+        }
+        if(kata.length()==4){
+            if(kata.charAt(0)=='b'){
+               if(kata.charAt(1)=='o'){
+                   if(kata.charAt(2)=='l'){
+                       if(kata.charAt(3)=='a'){
+                       s=true;
+                       }
+                   }
+               }
+            }
+        }
+        if(kata.length()==6){
+             if(kata.charAt(0)=='h'){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='d'){
+                      if(kata.charAt(3)=='i'){
+                          if(kata.charAt(4)=='a'){
+                              if(kata.charAt(5)=='h')
+                                s=true;   
+                          }
+                      }
+                         
+                   }
+               }
+            }
+        }
+        if(kata.length()==5){     
+             if(kata.charAt(0)=='t'){
+               if(kata.charAt(1)=='u'){
+                   if(kata.charAt(2)=='g'){
+                      if(kata.charAt(3)=='a'){
+                          if(kata.charAt(4)=='s')
+                              s=true; 
+                      }
+                         
+                   }
+               }
+            }
+        }
+            return s;  
+            
+    }
+
     public static boolean isSubject(String kata){
         boolean s=false;
-
+        if(kata.length()==3){
             if(kata.charAt(0)=='a'){
                if(kata.charAt(1)=='k'){
                    if(kata.charAt(2)=='u'){
@@ -75,13 +140,15 @@ public class TubesTBA {
                      }
                }
             }
-            if(kata.charAt(0)=='d'){
-               if(kata.charAt(1)=='i'){
-                   if(kata.charAt(2)=='a'){
-                       s=true;
+            else if(kata.charAt(0)=='d'){
+                    if(kata.charAt(1)=='i'){
+                        if(kata.charAt(2)=='a'){
+                            s=true;
                    }
                }
             }
+        }
+        if(kata.length()==4){
              if(kata.charAt(0)=='k'){
                if(kata.charAt(1)=='a'){
                    if(kata.charAt(2)=='m'){
@@ -104,6 +171,7 @@ public class TubesTBA {
                    }
                }
             }
+        }
             return s;  
             
     }
