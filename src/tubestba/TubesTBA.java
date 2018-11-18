@@ -88,16 +88,14 @@ public class TubesTBA {
                       if(kata.charAt(3)=='u')
                           s=true;
                    }
-               }
-            }
-             if(kata.charAt(0)=='k'){
-               if(kata.charAt(1)=='i'){
+               }else if(kata.charAt(1)=='i'){
                    if(kata.charAt(2)=='t'){
                       if(kata.charAt(3)=='a')
                           s=true;
                    }
                }
             }
+             
              if(kata.charAt(0)=='s'){
                if(kata.charAt(1)=='a'){
                    if(kata.charAt(2)=='y'){
