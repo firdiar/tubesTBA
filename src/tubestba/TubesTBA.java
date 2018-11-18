@@ -5,6 +5,8 @@
  */
 package tubestba;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.Scanner;
 
@@ -25,7 +27,7 @@ public class TubesTBA {
         System.out.println("Masukan Sebuah Kalimat");
         Scanner scanner = new Scanner( System.in );
         String kalimat = scanner.nextLine();
-        String[] kata = parseString(kalimat);
+        List<String> kata = parseString(kalimat);
         
         Stack<Character> stack = new Stack<>();
         stack.add('#');
@@ -37,8 +39,8 @@ public class TubesTBA {
         boolean stillCan = true;
         int i = 0;
         //System.out.println(processStack(stack, "s" , stack.pop()));
-        while(stillCan && i<kata.length){
-            stillCan = processStack(stack, tokenRecognizer(kata[i]) , stack.pop());
+        while(stillCan && i<kata.size()){
+            stillCan = processStack(stack, tokenRecognizer(kata.get(i)) , stack.pop());
             i++;
         }
         
@@ -54,11 +56,80 @@ public class TubesTBA {
     }
     
     public static Character tokenRecognizer(String kata){
+        if(isSubject(kata)){
+            return 's';
+        }
+        if(kata.equals("main")){
+            return 'p';
+        }
         return kata.charAt(0);
     }
-    public static String[] parseString(String kalimat){
+    
+    public static boolean isSubject(String kata){
+        boolean s=false;
+
+            if(kata.charAt(0)=='a'){
+               if(kata.charAt(1)=='k'){
+                   if(kata.charAt(2)=='u'){
+                       s=true;
+                     }
+               }
+            }
+            if(kata.charAt(0)=='d'){
+               if(kata.charAt(1)=='i'){
+                   if(kata.charAt(2)=='a'){
+                       s=true;
+                   }
+               }
+            }
+             if(kata.charAt(0)=='k'){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='m'){
+                      if(kata.charAt(3)=='u')
+                          s=true;
+                   }
+               }
+            }
+             if(kata.charAt(0)=='k'){
+               if(kata.charAt(1)=='i'){
+                   if(kata.charAt(2)=='t'){
+                      if(kata.charAt(3)=='a')
+                          s=true;
+                   }
+               }
+            }
+             if(kata.charAt(0)=='s'){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='y'){
+                      if(kata.charAt(3)=='a')
+                          s=true;
+                   }
+               }
+            }
+            return s;  
+            
+    }
+
+    public static List<String> parseString(String kalimat){
+        //String[] kata = kalimat.split(" ");
+        int i=0;
+        String temp = "";
+        List<String> kata = new ArrayList<>();
         
-        return kalimat.split(" ") ;
+        while(i < kalimat.length()){
+            if(kalimat.charAt(i) != ' '){
+               temp += kalimat.charAt(i);
+            }else if(kalimat.charAt(i) == ' '&& !temp.equals("di")){
+                kata.add(temp);
+                temp = "";
+            }else if(temp.equals("di")){
+                temp+=" ";
+            }
+            i++;
+        }
+        kata.add(temp);
+        
+        return kata;
     }
     
     public static void emptyStack(Stack<Character> stack){
