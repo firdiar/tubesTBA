@@ -59,11 +59,84 @@ public class TubesTBA {
         if(isSubject(kata)){
             return 's';
         }
+
         if(isObject(kata)){
             return 'o';
         }
+  
+
+        if(isPredikat(kata)){
+            return 'p';
+        }
         return kata.charAt(0);
     }
+
+
+    public static List<String> parseString(String kalimat){
+        kalimat = kalimat.toLowerCase();
+        int i=0;
+        String temp = "";
+        List<String> kata = new ArrayList<>();
+        
+        while(i < kalimat.length()){
+            if(kalimat.charAt(i) != ' '){
+               temp += kalimat.charAt(i);
+            }else if(kalimat.charAt(i) == ' '&& !temp.equals("di")){
+                kata.add(temp);
+                temp = "";
+            }else if(temp.equals("di")){
+                temp+=" ";
+            }
+            i++;
+        }
+        kata.add(temp);
+        
+        return kata;
+    }
+    
+    public static void emptyStack(Stack<Character> stack){
+        
+        boolean stillCan = true;
+        while (stillCan && !stack.isEmpty()) {            
+            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
+        }
+    
+    }
+    
+    //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
+    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
+        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
+            stack.add('X');
+            stack.add('p');
+            stack.add('s');
+            return true;
+        }else if(pop.equals('X')){
+            if(input .equals( 'o')){
+                stack.add('Y');
+                return true;
+            }else if(input.equals('k')){
+                
+                return true;
+            }else if(input.equals(Character.MIN_VALUE)){
+                return true;
+            }
+            return false;
+        }else if(pop.equals('Y')){
+            if(input.equals(Character.MIN_VALUE)){
+                return true;
+            }else if(input.equals( 'k')){
+                
+                return true;
+            }
+            return false;
+        }else if(Character.isLowerCase(input) && input.equals( pop)){
+            return true;
+        }
+        
+        return false;
+    
+    }
+    
     public static boolean isObject(String kata){
         boolean s=false;
             
@@ -175,77 +248,59 @@ public class TubesTBA {
             return s;  
             
     }
+    
+    public static boolean isPredikat(String kata){
+        boolean s=false;
 
-    public static List<String> parseString(String kalimat){
-        //String[] kata = kalimat.split(" ");
-        int i=0;
-        String temp = "";
-        List<String> kata = new ArrayList<>();
-        
-        while(i < kalimat.length()){
-            if(kalimat.charAt(i) != ' '){
-               temp += kalimat.charAt(i);
-            }else if(kalimat.charAt(i) == ' '&& !temp.equals("di")){
-                kata.add(temp);
-                temp = "";
-            }else if(temp.equals("di")){
-                temp+=" ";
+            if(kata.charAt(0)=='m' && kata.length()>=4){
+               if(kata.charAt(1)=='a'){
+                   if(kata.charAt(2)=='i'){
+                       if(kata.charAt(3)=='n'){
+                            s=true;
+                        }
+                   }
+                   if(kata.charAt(2)=='k'){
+                       if(kata.charAt(3)=='a'){
+                           if(kata.length()>4 && kata.charAt(4)=='n'){
+                            s=true;
+                            }
+                        }
+                   }
+                   if(kata.charAt(2)=='n'){
+                       if(kata.charAt(3)=='d'){
+                           if(kata.length()>4 &&kata.charAt(4)=='i'){
+                            s=true;
+                            }
+                        }
+                   }
+                   if(kata.charAt(2)=='r'){
+                       if(kata.charAt(3)=='a'){
+                           if(kata.length()>4 &&kata.charAt(4)=='h'){
+                            s=true;
+                            }
+                        }
+                   }
+               }
+               if(kata.charAt(1)=='i'){
+                   if(kata.charAt(2)=='n'){
+                       if(kata.charAt(3)=='u'){
+                           if(kata.length()>4 &&kata.charAt(4)=='m'){
+                                s=true;
+                            }
+                        }
+                   }
+               }
             }
-            i++;
-        }
-        kata.add(temp);
-        
-        return kata;
-    }
-    
-    public static void emptyStack(Stack<Character> stack){
-        
-        boolean stillCan = true;
-        while (stillCan && !stack.isEmpty()) {            
-            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
-        }
-    
-    }
-    
-    //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
-    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
-        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
-            stack.add('X');
-            stack.add('p');
-            stack.add('s');
-            return true;
-        }else if(pop.equals('X')){
-            if(input .equals( 'o')){
-                stack.add('Y');
-                return true;
-            }else if(input.equals('k')){
-                
-                return true;
-            }else if(input.equals(Character.MIN_VALUE)){
-                return true;
-            }
-            return false;
-        }else if(pop.equals('Y')){
-            if(input.equals(Character.MIN_VALUE)){
-                return true;
-            }else if(input.equals( 'k')){
-                
-                return true;
-            }
-            return false;
-        }else if(Character.isLowerCase(input) && input.equals( pop)){
-            return true;
-        }
-        
-        return false;
-    
+          
+            return s;  
+            
     }
     
     //Subjek
     // aku kamu dia saya kita
     
     //predikat
-    //memainkan mengerjakan memberikan memakan meminum
+    //main makan minum mandi marah
     
     //objek
     //bola tugas hadiah kue soda
