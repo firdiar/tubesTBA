@@ -57,24 +57,8 @@ public class TubesTBA {
         return kata.charAt(0);
     }
     public static String[] parseString(String kalimat){
-        String[] kata = kalimat.split(" ");
         
-        String[] kata2;
-        if(kata.length >= 1){
-            kata2 = new String[kata.length-1];
-        }else{
-            kata2 = new String[kata.length];
-        }
-        
-        for(int i=0;i<kata.length ; i++){
-            if(kata[i].equals("di") && i+1 == kata.length-1){
-                kata2[i] = kata[i] +" "+kata[i+1];
-                i++;
-            }else{
-                kata2[i] = kata[i];
-            }
-        }
-        return kata2 ;
+        return kalimat.split(" ") ;
     }
     
     public static void emptyStack(Stack<Character> stack){
@@ -98,7 +82,7 @@ public class TubesTBA {
                 stack.add('Y');
                 return true;
             }else if(input.equals('k')){
-                stack.add('Y'); //edited
+                
                 return true;
             }else if(input.equals(Character.MIN_VALUE)){
                 return true;
@@ -108,7 +92,7 @@ public class TubesTBA {
             if(input.equals(Character.MIN_VALUE)){
                 return true;
             }else if(input.equals( 'k')){
-                stack.add('Y'); // edited
+                
                 return true;
             }
             return false;
