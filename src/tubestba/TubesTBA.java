@@ -366,8 +366,7 @@ public class TubesTBA {
                 current = current.getNext(kata.charAt(i));
                 i++;
             }
-            System.out.println("aaaaaaaaaaa");
-            return current.getIsFinal();
+            return current==null ? false : current.getIsFinal();
     }
     
             
