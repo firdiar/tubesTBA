@@ -30,28 +30,82 @@ public class TubesTBA {
         List<String> kata = parseString(kalimat);
         
         Stack<Character> stack = new Stack<>();
-        stack.add('#');
-        stack.add('S');
-        processStack(stack, Character.MIN_VALUE , stack.pop());
+            
         
         
+        StatePDA init = new StatePDA("I");
+        StatePDA s = new StatePDA("s");
+        StatePDA q0 = new StatePDA("q0");
+        StatePDA q1 = new StatePDA("q1");
+        StatePDA q2 = new StatePDA("q2");
+        StatePDA q3 = new StatePDA("q3",true);
         
-        boolean stillCan = true;
+        init.addTransition(Character.MIN_VALUE, Character.MIN_VALUE, "S#", s);
+        
+        s.addTransition(Character.MIN_VALUE, 'S', "spX", q0);
+        
+        q0.addTransition('s', 's', "", q0);
+        q0.addTransition('p', 'p', "", q0);
+        q0.addTransition('o', 'X', "Y", q1);
+        q0.addTransition('k', 'X', "", q2);
+        q0.addTransition(Character.MIN_VALUE, 'X', "", q2);
+        
+        q1.addTransition(Character.MIN_VALUE, 'Y', "", q2);
+        q1.addTransition('k', 'Y', "", q2);
+        
+        q2.addTransition(Character.MIN_VALUE, '#', "", q3);
+        
+        
+        StatePDA current = init;
+        current = current.getNext(stack, Character.MIN_VALUE, Character.MIN_VALUE);
+        current = current.getNext(stack, Character.MIN_VALUE, stack.pop());
+        
         int i = 0;
-        //System.out.println(processStack(stack, "s" , stack.pop()));
-        while(stillCan && i<kata.size()){
-            stillCan = processStack(stack, tokenRecognizer(kata.get(i)) , stack.pop());
+        while(current!= null && i<kata.size()){
+            current = current.getNext(stack, tokenRecognizer(kata.get(i)), stack.pop());
             i++;
         }
         
-        
-        boolean isAccepted = false;
-        if(stillCan){
-            emptyStack(stack);
-            isAccepted = stack.isEmpty();
+        while(current != null && !stack.isEmpty()){
+            current = current.getNext(stack, Character.MIN_VALUE, stack.pop()); 
         }
         
-        System.out.println("Kata Di Terima : "+isAccepted);
+        
+        if(current != null){
+            System.out.println("Kata Diterima : "+current.isFinal());
+        }else{
+            System.out.println("Kata Diterima : false");
+        }
+        
+        
+       
+        
+        
+        
+        
+//        stack.clear();
+//        stack.add('#');
+//        stack.add('S');
+//        processStack(stack, Character.MIN_VALUE , stack.pop());
+//        
+//        
+//        
+//        boolean stillCan = true;
+//        int j = 0;
+//        //System.out.println(processStack(stack, "s" , stack.pop()));
+//        while(stillCan && j<kata.size()){
+//            stillCan = processStack(stack, tokenRecognizer(kata.get(j)) , stack.pop());
+//            j++;
+//        }
+//        
+//        
+//        boolean isAccepted = false;
+//        if(stillCan){
+//            emptyStack(stack);
+//            isAccepted = stack.isEmpty();
+//        }
+//        
+//        System.out.println("Kata Di Terima : "+isAccepted);
         
     }
     
@@ -73,7 +127,8 @@ public class TubesTBA {
         if(isPredikat(kata)){
             return 'p';
         }
-        return kata.MIN_VALUE;
+
+        return Character.MIN_VALUE;
     }
 
 
@@ -100,128 +155,87 @@ public class TubesTBA {
         return kata;
     }
     
-    public static void emptyStack(Stack<Character> stack){
-        
-        boolean stillCan = true;
-        while (stillCan && !stack.isEmpty()) {            
-            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
-        }
-    
-    }
+//    public static void emptyStack(Stack<Character> stack){
+//        
+//        boolean stillCan = true;
+//        while (stillCan && !stack.isEmpty()) {            
+//            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
+//        }
+//    
+//    }
     
     //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
-    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
-        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
-            stack.add('X');
-            stack.add('p');
-            stack.add('s');
-            return true;
-        }else if(pop.equals('X')){
-            if(input .equals( 'o')){
-                stack.add('Y');
-                return true;
-            }else if(input.equals('k')){
-                
-                return true;
-            }else if(input.equals(Character.MIN_VALUE)){
-                return true;
-            }
-            return false;
-        }else if(pop.equals('Y')){
-            if(input.equals(Character.MIN_VALUE)){
-                return true;
-            }else if(input.equals( 'k')){
-                
-                return true;
-            }
-            return false;
-        }else if(Character.isLowerCase(input) && input.equals( pop)){
-            return true;
-        }
-        
-        return false;
-    
-    }
+//    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
+//        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
+//            stack.add('X');
+//            stack.add('p');
+//            stack.add('s');
+//            return true;
+//        }else if(pop.equals('X')){
+//            if(input .equals( 'o')){
+//                stack.add('Y');
+//                return true;
+//            }else if(input.equals('k')){
+//                
+//                return true;
+//            }else if(input.equals(Character.MIN_VALUE)){
+//                return true;
+//            }
+//            return false;
+//        }else if(pop.equals('Y')){
+//            if(input.equals(Character.MIN_VALUE)){
+//                return true;
+//            }else if(input.equals( 'k')){
+//                
+//                return true;
+//            }
+//            return false;
+//        }else if(Character.isLowerCase(input) && input.equals( pop)){
+//            return true;
+//        }
+//        
+//        return false;
+//    
+//    }
     public static boolean isAdverb(String kata){
-        boolean k= false;
-        
-        if (kata.charAt(0)=='d' && kata.charAt(1)=='i' && kata.charAt(2)==' '&& kata.length()>=8){
-           if(kata.charAt(3)=='k'){
-               if(kata.charAt(4)=='a'){
-                   if(kata.charAt(5)=='n'){
-                       if( kata.charAt(6)=='t'){
-                        if (kata.charAt(7)=='i'){
-                           if (kata.length()> 8 && kata.charAt(8)=='n'){
-                             k = true;
-                        }
-                       }
-                   }
-                     }
-               }
+            //di kali , di kabin , di kota , di kantin , di kampus
+
+            StateFA q0 = new StateFA(" ");
+            StateFA q1 = new StateFA("di ");
+            StateFA q2 = new StateFA("k");
+            StateFA q3 = new StateFA("ao");
+            StateFA q4 = new StateFA("lbtnm");
+            StateFA q5 = new StateFA("iatp");
+            StateFA q6 = new StateFA("niu");
+            StateFA q7 = new StateFA("ns",true);
+            
+            q0.addTransition('d', q1);
+            q0.addTransition('i', q1);
+            q0.addTransition(' ', q1);
+            q1.addTransition('k', q2);
+            q2.addTransition('a', q3);
+            q2.addTransition('o', q3);
+            q3.addTransition('l', q4);
+            q3.addTransition('b', q4);
+            q3.addTransition('t', q4);
+            q3.addTransition('n', q4);
+            q3.addTransition('m', q4);
+            q4.addTransition('i', q5);
+            q4.addTransition('a', q5);
+            q4.addTransition('t', q5);
+            q4.addTransition('p', q5);
+            q5.addTransition('n', q6);
+            q5.addTransition('i', q6);
+            q5.addTransition('u', q6);
+            q6.addTransition('n', q7);
+            q6.addTransition('s', q7);
+            StateFA current = q0;
+            int i=0;
+            while(current!=null && i<kata.length()){
+                current = current.getNext(kata.charAt(i));
+                i++;
             }
-           
-           if(kata.charAt(3)=='k'){
-               if(kata.charAt(4)=='a'){
-                   if(kata.charAt(5)=='m'){
-                       if( kata.charAt(6)=='p'){
-                        if (kata.charAt(7)=='u'){
-                           if (kata.length()> 8&& kata.charAt(8)=='s'){
-                             k = true; 
-                        }
-                       }
-                   }
-                     }
-               }
-            }
-           
-           
-           if(kata.charAt(3)=='r'){
-               if(kata.charAt(4)=='u'){
-                   if(kata.charAt(5)=='m'){
-                       if( kata.charAt(6)=='a'){
-                        if (kata.charAt(7)=='h'){
-                            k =true;
-                       }
-                   }
-                     }
-               }
-            }
-           
-           
-           if(kata.charAt(3)=='k'){
-               if(kata.charAt(4)=='o'){
-                   if(kata.charAt(5)=='s'){
-                       if( kata.charAt(6)=='a'){
-                        if (kata.charAt(7)=='n'){
-                           k =true;
-                        }
-                   }
-                     }
-               }
-            }
-           
-           
-           
-           if(kata.charAt(3)=='l'){
-               if(kata.charAt(4)=='a'){
-                   if(kata.charAt(5)=='p'){
-                       if( kata.charAt(6)=='a'){
-                        if (kata.charAt(7)=='n'){
-                           if (kata.length()> 10 &&kata.charAt(8)=='g'){
-                             if (kata.charAt(9)=='a'){
-                                 if (kata.charAt(10)=='n'){
-                             k = true;
-                        }
-                        }
-                        }
-                       }
-                   }
-                     }
-               }
-            }
-           
-        } 
-        return k;
+            return current !=null ? current.getIsFinal():false;
     }
     
     public static boolean isObject(String kata){
@@ -291,50 +305,76 @@ public class TubesTBA {
     }
 
     public static boolean isSubject(String kata){
-        boolean s=false;
-        if(kata.length()==3){
-            if(kata.charAt(0)=='a'){
-               if(kata.charAt(1)=='k'){
-                   if(kata.charAt(2)=='u'){
-                       s=true;
-                     }
-               }
+            // aku ani abi ali ari
+
+            StateFA q0 = new StateFA("is");
+            StateFA q1 = new StateFA("a");
+            StateFA q2 = new StateFA("knblr");
+            StateFA q3 = new StateFA("iu",true);
+            q0.addTransition('a', q1);
+            q1.addTransition('k', q2);
+            q1.addTransition('n', q2);
+            q1.addTransition('b', q2);
+            q1.addTransition('l', q2);
+            q1.addTransition('r', q2);
+            q2.addTransition('i', q3);
+            q2.addTransition('u', q3);
+
+            StateFA current = q0;
+            int i=0;
+            while(current!=null && i<kata.length()){
+                current = current.getNext(kata.charAt(i));
+                i++;
             }
-            else if(kata.charAt(0)=='d'){
-                    if(kata.charAt(1)=='i'){
-                        if(kata.charAt(2)=='a'){
-                            s=true;
-                   }
-               }
-            }
-        }
-        if(kata.length()==4){
-             if(kata.charAt(0)=='k'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='m'){
-                      if(kata.charAt(3)=='u')
-                          s=true;
-                   }
-               }else if(kata.charAt(1)=='i'){
-                   if(kata.charAt(2)=='t'){
-                      if(kata.charAt(3)=='a')
-                          s=true;
-                   }
-               }
-            }
-             
-             if(kata.charAt(0)=='s'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='y'){
-                      if(kata.charAt(3)=='a')
-                          s=true;
-                   }
-               }
-            }
-        }
-            return s;  
-            
+          
     }
+    
+            
+            
+//        boolean s=false;
+//        if(kata.length()==3){
+//            if(kata.charAt(0)=='a'){
+//               if(kata.charAt(1)=='k'){
+//                   if(kata.charAt(2)=='u'){
+//                       s=true;
+//                     }
+//               }
+//            }
+//            else if(kata.charAt(0)=='d'){
+//                    if(kata.charAt(1)=='i'){
+//                        if(kata.charAt(2)=='a'){
+//                            s=true;
+//                   }
+//               }
+//            }
+//        }
+//        if(kata.length()==4){
+//             if(kata.charAt(0)=='k'){
+//               if(kata.charAt(1)=='a'){
+//                   if(kata.charAt(2)=='m'){
+//                      if(kata.charAt(3)=='u')
+//                          s=true;
+//                   }
+//               }else if(kata.charAt(1)=='i'){
+//                   if(kata.charAt(2)=='t'){
+//                      if(kata.charAt(3)=='a')
+//                          s=true;
+//                   }
+//               }
+//            }
+//             
+//             if(kata.charAt(0)=='s'){
+//               if(kata.charAt(1)=='a'){
+//                   if(kata.charAt(2)=='y'){
+//                      if(kata.charAt(3)=='a')
+//                          s=true;
+//                   }
+//               }
+//            }
+//        }
+//            return s;  
+            
+    
     
     public static boolean isPredikat(String kata){
         boolean s=false;
@@ -384,7 +424,7 @@ public class TubesTBA {
     }
     
     //Subjek
-    // aku kamu dia saya kita
+    // aku ani abi andi ari
     
     //predikat
     //main makan minum mandi marah
