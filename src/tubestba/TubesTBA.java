@@ -71,42 +71,9 @@ public class TubesTBA {
         }
         
         
-        if(current != null){
-            System.out.println("Kata Diterima : "+current.isFinal());
-        }else{
-            System.out.println("Kata Diterima : false");
-        }
         
-        
-       
-        
-        
-        
-        
-//        stack.clear();
-//        stack.add('#');
-//        stack.add('S');
-//        processStack(stack, Character.MIN_VALUE , stack.pop());
-//        
-//        
-//        
-//        boolean stillCan = true;
-//        int j = 0;
-//        //System.out.println(processStack(stack, "s" , stack.pop()));
-//        while(stillCan && j<kata.size()){
-//            stillCan = processStack(stack, tokenRecognizer(kata.get(j)) , stack.pop());
-//            j++;
-//        }
-//        
-//        
-//        boolean isAccepted = false;
-//        if(stillCan){
-//            emptyStack(stack);
-//            isAccepted = stack.isEmpty();
-//        }
-//        
-//        System.out.println("Kata Di Terima : "+isAccepted);
-        
+        System.out.println("Kata Diterima : "+(current != null?current.isFinal():false));
+              
     }
     
     public static Character tokenRecognizer(String kata){
@@ -122,13 +89,13 @@ public class TubesTBA {
         if(isObject(kata)){
             return 'o';
         }
-  
+        
 
         if(isPredikat(kata)){
             return 'p';
         }
 
-        return Character.MIN_VALUE;
+        return 'w';
     }
 
 
@@ -156,40 +123,7 @@ public class TubesTBA {
     }
     
 
-    
-    //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
-//    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
-//        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
-//            stack.add('X');
-//            stack.add('p');
-//            stack.add('s');
-//            return true;
-//        }else if(pop.equals('X')){
-//            if(input .equals( 'o')){
-//                stack.add('Y');
-//                return true;
-//            }else if(input.equals('k')){
-//                
-//                return true;
-//            }else if(input.equals(Character.MIN_VALUE)){
-//                return true;
-//            }
-//            return false;
-//        }else if(pop.equals('Y')){
-//            if(input.equals(Character.MIN_VALUE)){
-//                return true;
-//            }else if(input.equals( 'k')){
-//                
-//                return true;
-//            }
-//            return false;
-//        }else if(Character.isLowerCase(input) && input.equals( pop)){
-//            return true;
-//        }
-//        
-//        return false;
-//    
-//    }
+ 
     public static boolean isAdverb(String kata){
             //di kali , di kabin , di kota , di kantin , di kampus
 
@@ -205,14 +139,9 @@ public class TubesTBA {
             StateFA q7 = new StateFA("q7");
             StateFA q8 = new StateFA("q8");
             StateFA q9 = new StateFA("q9");
-            
-                    
             StateFA q12= new StateFA("q12"); //
-            StateFA q13= new StateFA("q13");//
-     
-            StateFA q15= new StateFA("q15"); 
+            StateFA q13= new StateFA("q13"); 
             StateFA q16= new StateFA("q16");
-
             StateFA q18= new StateFA("q18",true); //
             StateFA q19 = new StateFA("q19");
              
@@ -233,8 +162,7 @@ public class TubesTBA {
             q19.addTransition('n', q18);
             q7.addTransition('a', q18);
             q8.addTransition('t', q12);
-            q12.addTransition('i', q15);
-            q15.addTransition('n', q18);
+            q12.addTransition('i', q19);
             q9.addTransition('p', q13);
             q13.addTransition('u', q16);
             q16.addTransition('s', q18);
@@ -254,21 +182,29 @@ public class TubesTBA {
 
         StateFA q0 = new StateFA("is");
         StateFA q1 = new StateFA("b");
-        StateFA q2 = new StateFA("oau");
-        StateFA q3 = new StateFA("ltjsk");
-        StateFA q4 = new StateFA("auo",true);
+        StateFA q2 = new StateFA("a");
+        StateFA q3 = new StateFA("o");
+        StateFA q4 = new StateFA("u");
+        StateFA q5 = new StateFA("s");
+        StateFA q7 = new StateFA("jt");
+        StateFA q6 = new StateFA("l");
+        StateFA q8 = new StateFA("k");
+        StateFA q9 = new StateFA("auo",true);
+
         q0.addTransition('b', q1);
         q1.addTransition('a', q2);
-        q1.addTransition('o', q2);
-        q1.addTransition('u', q2);
-        q2.addTransition('l', q3);
-        q2.addTransition('t', q3);
-        q2.addTransition('j', q3);
-        q2.addTransition('s', q3);
-        q2.addTransition('k', q3);
-        q3.addTransition('a', q4);
-        q3.addTransition('u', q4);
-        q3.addTransition('o', q4);
+        q1.addTransition('o', q3);
+        q1.addTransition('u', q4);
+        q2.addTransition('s', q5);
+        q2.addTransition('t', q7);
+        q2.addTransition('j', q7);
+        q3.addTransition('l', q6);
+        q4.addTransition('k', q8);
+        q6.addTransition('a', q9);
+        q8.addTransition('u', q9);
+        q5.addTransition('o', q9);
+        q7.addTransition('u', q9);
+        
         
         StateFA current = q0;
         int i =0;
@@ -282,20 +218,21 @@ public class TubesTBA {
     }
 
     public static boolean isSubject(String kata){
-            // aku ani abi ali ari
+            // aku ani abi ali ari 
 
             StateFA q0 = new StateFA("is");
             StateFA q1 = new StateFA("a");
             StateFA q2 = new StateFA("knblr");
+            StateFA q4 = new StateFA("q4");
             StateFA q3 = new StateFA("iu",true);
             q0.addTransition('a', q1);
-            q1.addTransition('k', q2);
+            q1.addTransition('k', q4);
             q1.addTransition('n', q2);
             q1.addTransition('b', q2);
             q1.addTransition('l', q2);
             q1.addTransition('r', q2);
             q2.addTransition('i', q3);
-            q2.addTransition('u', q3);
+            q4.addTransition('u', q3);
 
             StateFA current = q0;
             int i=0;
