@@ -193,42 +193,60 @@ public class TubesTBA {
     public static boolean isAdverb(String kata){
             //di kali , di kabin , di kota , di kantin , di kampus
 
-            StateFA q0 = new StateFA(" ");
-            StateFA q1 = new StateFA("di ");
-            StateFA q2 = new StateFA("k");
-            StateFA q3 = new StateFA("ao");
-            StateFA q4 = new StateFA("lbtnm");
-            StateFA q5 = new StateFA("iatp");
-            StateFA q6 = new StateFA("niu");
-            StateFA q7 = new StateFA("ns",true);
+            StateFA q0 = new StateFA("q0");
+            StateFA q1a = new StateFA("q1a");
+            StateFA q1b = new StateFA("q1b");
+            StateFA q1c = new StateFA("q1c");
+            StateFA q2 = new StateFA("q2");
+            StateFA q3 = new StateFA("q3");//
+            StateFA q4 = new StateFA("q4");//
+            StateFA q5 = new StateFA("q5");
+            StateFA q6 = new StateFA("q6");
+            StateFA q7 = new StateFA("q7");
+            StateFA q8 = new StateFA("q8");
+            StateFA q9 = new StateFA("q9");
             
-            q0.addTransition('d', q1);
-            q0.addTransition('i', q1);
-            q0.addTransition(' ', q1);
-            q1.addTransition('k', q2);
+                    
+            StateFA q12= new StateFA("q12"); //
+            StateFA q13= new StateFA("q13");//
+     
+            StateFA q15= new StateFA("q15"); 
+            StateFA q16= new StateFA("q16");
+
+            StateFA q18= new StateFA("q18",true); //
+            StateFA q19 = new StateFA("q19");
+             
+            
+            q0.addTransition('d', q1a);
+            q1a.addTransition('i', q1b);
+            q1b.addTransition(' ', q1c);
+            q1c.addTransition('k', q2);
             q2.addTransition('a', q3);
-            q2.addTransition('o', q3);
-            q3.addTransition('l', q4);
-            q3.addTransition('b', q4);
-            q3.addTransition('t', q4);
-            q3.addTransition('n', q4);
-            q3.addTransition('m', q4);
-            q4.addTransition('i', q5);
-            q4.addTransition('a', q5);
-            q4.addTransition('t', q5);
-            q4.addTransition('p', q5);
-            q5.addTransition('n', q6);
-            q5.addTransition('i', q6);
-            q5.addTransition('u', q6);
-            q6.addTransition('n', q7);
-            q6.addTransition('s', q7);
+            q2.addTransition('o', q4);
+            q3.addTransition('l', q5);
+            q3.addTransition('b', q6);
+            q4.addTransition('t', q7);
+            q3.addTransition('n', q8);
+            q3.addTransition('m', q9);   //di kali , di kabin , di kota , di kantin , di kampus
+            q5.addTransition('i', q18);
+            q6.addTransition('i', q19);
+            q19.addTransition('n', q18);
+            q7.addTransition('a', q18);
+            q8.addTransition('t', q12);
+            q12.addTransition('i', q15);
+            q15.addTransition('n', q18);
+            q9.addTransition('p', q13);
+            q13.addTransition('u', q16);
+            q16.addTransition('s', q18);
+            
+            
             StateFA current = q0;
             int i=0;
             while(current!=null && i<kata.length()){
                 current = current.getNext(kata.charAt(i));
                 i++;
             }
-            return current !=null ? current.getIsFinal():false;
+            return current !=null ? current.getIsFinal() : false;
     }
     
     public static boolean isObject(String kata){
