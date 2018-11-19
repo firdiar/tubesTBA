@@ -279,69 +279,35 @@ public class TubesTBA {
     }
     
     public static boolean isObject(String kata){
-        boolean s=false;
-            
-        if(kata.length()==4){
-             if(kata.charAt(0)=='s'){
-               if(kata.charAt(1)=='o'){
-                   if(kata.charAt(2)=='d'){
-                       if(kata.charAt(3)=='a'){
-                       s=true;
-                       }
-                   }
-               }
-            }
+    //bola batu baju baso buku
+
+        StateFA q0 = new StateFA("is");
+        StateFA q1 = new StateFA("b");
+        StateFA q2 = new StateFA("oau");
+        StateFA q3 = new StateFA("ltjsk");
+        StateFA q4 = new StateFA("auo",true);
+        q0.addTransition('b', q1);
+        q1.addTransition('a', q2);
+        q1.addTransition('o', q2);
+        q1.addTransition('u', q2);
+        q2.addTransition('l', q3);
+        q2.addTransition('t', q3);
+        q2.addTransition('j', q3);
+        q2.addTransition('s', q3);
+        q2.addTransition('k', q3);
+        q3.addTransition('a', q4);
+        q3.addTransition('u', q4);
+        q3.addTransition('o', q4);
+        
+        StateFA current = q0;
+        int i =0;
+        while(current!=null && i<kata.length()){
+            current = current.getNext(kata.charAt(i));
+            i++;
         }
-        if(kata.length()==3){
-            if(kata.charAt(0)=='k'){
-               if(kata.charAt(1)=='u'){
-                   if(kata.charAt(2)=='e'){
-                       s=true;
-                     }
-               }
-            }
-        }
-        if(kata.length()==4){
-            if(kata.charAt(0)=='b'){
-               if(kata.charAt(1)=='o'){
-                   if(kata.charAt(2)=='l'){
-                       if(kata.charAt(3)=='a'){
-                       s=true;
-                       }
-                   }
-               }
-            }
-        }
-        if(kata.length()==6){
-             if(kata.charAt(0)=='h'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='d'){
-                      if(kata.charAt(3)=='i'){
-                          if(kata.charAt(4)=='a'){
-                              if(kata.charAt(5)=='h')
-                                s=true;   
-                          }
-                      }
-                         
-                   }
-               }
-            }
-        }
-        if(kata.length()==5){     
-             if(kata.charAt(0)=='t'){
-               if(kata.charAt(1)=='u'){
-                   if(kata.charAt(2)=='g'){
-                      if(kata.charAt(3)=='a'){
-                          if(kata.charAt(4)=='s')
-                              s=true; 
-                      }
-                         
-                   }
-               }
-            }
-        }
-            return s;  
-            
+        return current == null ? false : current.getIsFinal();
+                
+                
     }
 
     public static boolean isSubject(String kata){
@@ -368,52 +334,6 @@ public class TubesTBA {
             }
             return current==null ? false : current.getIsFinal();
     }
-    
-            
-            
-//        boolean s=false;
-//        if(kata.length()==3){
-//            if(kata.charAt(0)=='a'){
-//               if(kata.charAt(1)=='k'){
-//                   if(kata.charAt(2)=='u'){
-//                       s=true;
-//                     }
-//               }
-//            }
-//            else if(kata.charAt(0)=='d'){
-//                    if(kata.charAt(1)=='i'){
-//                        if(kata.charAt(2)=='a'){
-//                            s=true;
-//                   }
-//               }
-//            }
-//        }
-//        if(kata.length()==4){
-//             if(kata.charAt(0)=='k'){
-//               if(kata.charAt(1)=='a'){
-//                   if(kata.charAt(2)=='m'){
-//                      if(kata.charAt(3)=='u')
-//                          s=true;
-//                   }
-//               }else if(kata.charAt(1)=='i'){
-//                   if(kata.charAt(2)=='t'){
-//                      if(kata.charAt(3)=='a')
-//                          s=true;
-//                   }
-//               }
-//            }
-//             
-//             if(kata.charAt(0)=='s'){
-//               if(kata.charAt(1)=='a'){
-//                   if(kata.charAt(2)=='y'){
-//                      if(kata.charAt(3)=='a')
-//                          s=true;
-//                   }
-//               }
-//            }
-//        }
-//            return s;  
-            
     
     
     public static boolean isPredikat(String kata){
@@ -470,7 +390,7 @@ public class TubesTBA {
     //main makan minum mandi marah
     
     //objek
-    //bola tugas hadiah kue soda
+    //bola boling baju baso botol
     
     //keterangan
     //di lapangan , di rumah , di kosan , di kantin , di kampus
