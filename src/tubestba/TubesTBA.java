@@ -345,50 +345,77 @@ public class TubesTBA {
     }
 
     public static boolean isSubject(String kata){
-        boolean s=false;
-        if(kata.length()==3){
-            if(kata.charAt(0)=='a'){
-               if(kata.charAt(1)=='k'){
-                   if(kata.charAt(2)=='u'){
-                       s=true;
-                     }
-               }
+            // aku ani abi ali ari
+
+            StateFA q0 = new StateFA("is");
+            StateFA q1 = new StateFA("a");
+            StateFA q2 = new StateFA("knblr");
+            StateFA q3 = new StateFA("iu",true);
+            q0.addTransition('a', q1);
+            q1.addTransition('k', q2);
+            q1.addTransition('n', q2);
+            q1.addTransition('b', q2);
+            q1.addTransition('l', q2);
+            q1.addTransition('r', q2);
+            q2.addTransition('i', q3);
+            q2.addTransition('u', q3);
+
+            StateFA current = q0;
+            int i=0;
+            while(current!=null && i<kata.length()){
+                current = current.getNext(kata.charAt(i));
+                i++;
             }
-            else if(kata.charAt(0)=='d'){
-                    if(kata.charAt(1)=='i'){
-                        if(kata.charAt(2)=='a'){
-                            s=true;
-                   }
-               }
-            }
-        }
-        if(kata.length()==4){
-             if(kata.charAt(0)=='k'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='m'){
-                      if(kata.charAt(3)=='u')
-                          s=true;
-                   }
-               }else if(kata.charAt(1)=='i'){
-                   if(kata.charAt(2)=='t'){
-                      if(kata.charAt(3)=='a')
-                          s=true;
-                   }
-               }
-            }
-             
-             if(kata.charAt(0)=='s'){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='y'){
-                      if(kata.charAt(3)=='a')
-                          s=true;
-                   }
-               }
-            }
-        }
-            return s;  
-            
+            System.out.println("aaaaaaaaaaa");
+            return current.getIsFinal();
     }
+    
+            
+            
+//        boolean s=false;
+//        if(kata.length()==3){
+//            if(kata.charAt(0)=='a'){
+//               if(kata.charAt(1)=='k'){
+//                   if(kata.charAt(2)=='u'){
+//                       s=true;
+//                     }
+//               }
+//            }
+//            else if(kata.charAt(0)=='d'){
+//                    if(kata.charAt(1)=='i'){
+//                        if(kata.charAt(2)=='a'){
+//                            s=true;
+//                   }
+//               }
+//            }
+//        }
+//        if(kata.length()==4){
+//             if(kata.charAt(0)=='k'){
+//               if(kata.charAt(1)=='a'){
+//                   if(kata.charAt(2)=='m'){
+//                      if(kata.charAt(3)=='u')
+//                          s=true;
+//                   }
+//               }else if(kata.charAt(1)=='i'){
+//                   if(kata.charAt(2)=='t'){
+//                      if(kata.charAt(3)=='a')
+//                          s=true;
+//                   }
+//               }
+//            }
+//             
+//             if(kata.charAt(0)=='s'){
+//               if(kata.charAt(1)=='a'){
+//                   if(kata.charAt(2)=='y'){
+//                      if(kata.charAt(3)=='a')
+//                          s=true;
+//                   }
+//               }
+//            }
+//        }
+//            return s;  
+            
+    
     
     public static boolean isPredikat(String kata){
         boolean s=false;
@@ -438,7 +465,7 @@ public class TubesTBA {
     }
     
     //Subjek
-    // aku kamu dia saya kita
+    // aku ani abi andi ari
     
     //predikat
     //main makan minum mandi marah
