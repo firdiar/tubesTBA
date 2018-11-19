@@ -94,6 +94,7 @@ public class TubesTBA {
         if(isPredikat(kata)){
             return 'p';
         }
+
         return Character.MIN_VALUE;
     }
 
@@ -124,85 +125,44 @@ public class TubesTBA {
 
  
     public static boolean isAdverb(String kata){
-        boolean k= false;
-        
-        if (kata.charAt(0)=='d' && kata.charAt(1)=='i' && kata.charAt(2)==' '&& kata.length()>=8){
-           if(kata.charAt(3)=='k'){
-               if(kata.charAt(4)=='a'){
-                   if(kata.charAt(5)=='n'){
-                       if( kata.charAt(6)=='t'){
-                        if (kata.charAt(7)=='i'){
-                           if (kata.length()> 8 && kata.charAt(8)=='n'){
-                             k = true;
-                        }
-                       }
-                   }
-                     }
-               }
+            //di kali , di kabin , di kota , di kantin , di kampus
+
+            StateFA q0 = new StateFA(" ");
+            StateFA q1 = new StateFA("di ");
+            StateFA q2 = new StateFA("k");
+            StateFA q3 = new StateFA("ao");
+            StateFA q4 = new StateFA("lbtnm");
+            StateFA q5 = new StateFA("iatp");
+            StateFA q6 = new StateFA("niu");
+            StateFA q7 = new StateFA("ns",true);
+            
+            q0.addTransition('d', q1);
+            q0.addTransition('i', q1);
+            q0.addTransition(' ', q1);
+            q1.addTransition('k', q2);
+            q2.addTransition('a', q3);
+            q2.addTransition('o', q3);
+            q3.addTransition('l', q4);
+            q3.addTransition('b', q4);
+            q3.addTransition('t', q4);
+            q3.addTransition('n', q4);
+            q3.addTransition('m', q4);
+            q4.addTransition('i', q5);
+            q4.addTransition('a', q5);
+            q4.addTransition('t', q5);
+            q4.addTransition('p', q5);
+            q5.addTransition('n', q6);
+            q5.addTransition('i', q6);
+            q5.addTransition('u', q6);
+            q6.addTransition('n', q7);
+            q6.addTransition('s', q7);
+            StateFA current = q0;
+            int i=0;
+            while(current!=null && i<kata.length()){
+                current = current.getNext(kata.charAt(i));
+                i++;
             }
-           
-           if(kata.charAt(3)=='k'){
-               if(kata.charAt(4)=='a'){
-                   if(kata.charAt(5)=='m'){
-                       if( kata.charAt(6)=='p'){
-                        if (kata.charAt(7)=='u'){
-                           if (kata.length()> 8&& kata.charAt(8)=='s'){
-                             k = true; 
-                        }
-                       }
-                   }
-                     }
-               }
-            }
-           
-           
-           if(kata.charAt(3)=='r'){
-               if(kata.charAt(4)=='u'){
-                   if(kata.charAt(5)=='m'){
-                       if( kata.charAt(6)=='a'){
-                        if (kata.charAt(7)=='h'){
-                            k =true;
-                       }
-                   }
-                     }
-               }
-            }
-           
-           
-           if(kata.charAt(3)=='k'){
-               if(kata.charAt(4)=='o'){
-                   if(kata.charAt(5)=='s'){
-                       if( kata.charAt(6)=='a'){
-                        if (kata.charAt(7)=='n'){
-                           k =true;
-                        }
-                   }
-                     }
-               }
-            }
-           
-           
-           
-           if(kata.charAt(3)=='l'){
-               if(kata.charAt(4)=='a'){
-                   if(kata.charAt(5)=='p'){
-                       if( kata.charAt(6)=='a'){
-                        if (kata.charAt(7)=='n'){
-                           if (kata.length()> 10 &&kata.charAt(8)=='g'){
-                             if (kata.charAt(9)=='a'){
-                                 if (kata.charAt(10)=='n'){
-                             k = true;
-                        }
-                        }
-                        }
-                       }
-                   }
-                     }
-               }
-            }
-           
-        } 
-        return k;
+            return current !=null ? current.getIsFinal():false;
     }
     
     public static boolean isObject(String kata){
@@ -259,7 +219,9 @@ public class TubesTBA {
                 current = current.getNext(kata.charAt(i));
                 i++;
             }
+
             return current==null ? false : current.getIsFinal();
+
     }
 
     public static boolean isPredikat(String kata){
@@ -330,7 +292,6 @@ public class TubesTBA {
     //bola boling baju baso botol
     
     //keterangan
-    //di lapangan , di rumah , di kosan , di kantin , di kampus
-    
+    //di kali , di kabin , di kota , di kantin , di kampus    
     
 }
