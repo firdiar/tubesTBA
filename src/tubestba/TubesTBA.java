@@ -154,14 +154,7 @@ public class TubesTBA {
         return kata;
     }
     
-//    public static void emptyStack(Stack<Character> stack){
-//        
-//        boolean stillCan = true;
-//        while (stillCan && !stack.isEmpty()) {            
-//            stillCan = processStack(stack, Character.MIN_VALUE , stack.pop());
-//        }
-//    
-//    }
+
     
     //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
 //    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
