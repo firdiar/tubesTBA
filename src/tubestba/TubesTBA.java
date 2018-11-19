@@ -363,102 +363,66 @@ public class TubesTBA {
             return current.getIsFinal();
     }
     
-            
-            
-//        boolean s=false;
-//        if(kata.length()==3){
-//            if(kata.charAt(0)=='a'){
-//               if(kata.charAt(1)=='k'){
-//                   if(kata.charAt(2)=='u'){
-//                       s=true;
-//                     }
-//               }
-//            }
-//            else if(kata.charAt(0)=='d'){
-//                    if(kata.charAt(1)=='i'){
-//                        if(kata.charAt(2)=='a'){
-//                            s=true;
-//                   }
-//               }
-//            }
-//        }
-//        if(kata.length()==4){
-//             if(kata.charAt(0)=='k'){
-//               if(kata.charAt(1)=='a'){
-//                   if(kata.charAt(2)=='m'){
-//                      if(kata.charAt(3)=='u')
-//                          s=true;
-//                   }
-//               }else if(kata.charAt(1)=='i'){
-//                   if(kata.charAt(2)=='t'){
-//                      if(kata.charAt(3)=='a')
-//                          s=true;
-//                   }
-//               }
-//            }
-//             
-//             if(kata.charAt(0)=='s'){
-//               if(kata.charAt(1)=='a'){
-//                   if(kata.charAt(2)=='y'){
-//                      if(kata.charAt(3)=='a')
-//                          s=true;
-//                   }
-//               }
-//            }
-//        }
-//            return s;  
-            
-    
-    
     public static boolean isPredikat(String kata){
-        boolean s=false;
+        
+        //main makan minum mandi masak
+        StateFA q0 = new StateFA("q0");
+        StateFA q1 = new StateFA("q1");
+        StateFA q2 = new StateFA("q2");
+        StateFA q3 = new StateFA("q3");
+        StateFA q4 = new StateFA("q4");
+        StateFA q5 = new StateFA("q5");
+        StateFA q6 = new StateFA("q6");
+        StateFA q7 = new StateFA("q7");
+        StateFA q8 = new StateFA("q8");
+        StateFA q9 = new StateFA("q9");
+        StateFA q10 = new StateFA("q10");
+        StateFA q11 = new StateFA("q11");
+        StateFA F = new StateFA("F",true);
+        q0.addTransition('m', q1);
+        
+        q1.addTransition('a', q2);
+        q1.addTransition('i', q9);
+        
+        q2.addTransition('i', q3);
+        q2.addTransition('k', q4);
+        q2.addTransition('s', q5);//
+        q2.addTransition('n', q7);//
+        
+        q3.addTransition('n', F);
+        
+        q4.addTransition('a', q3);
+        
+        q5.addTransition('a', q6);
+        
+        q6.addTransition('k', F);
+        
+        q7.addTransition('d', q8);
+        
+        q8.addTransition('i', F);
+        
+        q9.addTransition('n', q10);
+        
+        q10.addTransition('u', q11);
+        
+        q11.addTransition('m', F);
+        
+        
+        
+        
 
-            if(kata.charAt(0)=='m' && kata.length()>=4){
-               if(kata.charAt(1)=='a'){
-                   if(kata.charAt(2)=='i'){
-                       if(kata.charAt(3)=='n'){
-                            s=true;
-                        }
-                   }
-                   if(kata.charAt(2)=='k'){
-                       if(kata.charAt(3)=='a'){
-                           if(kata.length()>4 && kata.charAt(4)=='n'){
-                            s=true;
-                            }
-                        }
-                   }
-                   if(kata.charAt(2)=='n'){
-                       if(kata.charAt(3)=='d'){
-                           if(kata.length()>4 &&kata.charAt(4)=='i'){
-                            s=true;
-                            }
-                        }
-                   }
-                   if(kata.charAt(2)=='r'){
-                       if(kata.charAt(3)=='a'){
-                           if(kata.length()>4 &&kata.charAt(4)=='h'){
-                            s=true;
-                            }
-                        }
-                   }
-               }
-               if(kata.charAt(1)=='i'){
-                   if(kata.charAt(2)=='n'){
-                       if(kata.charAt(3)=='u'){
-                           if(kata.length()>4 &&kata.charAt(4)=='m'){
-                                s=true;
-                            }
-                        }
-                   }
-               }
-            }
-          
-            return s;  
-            
+        StateFA current = q0;
+        int i=0;
+        while(current!=null && i<kata.length()){
+            current = current.getNext(kata.charAt(i));
+            i++;
+        }
+        
+        return current!= null? current.getIsFinal():false;
     }
     
     //Subjek
-    // aku ani abi andi ari
+    //aku ani abi ali ari
     
     //predikat
     //main makan minum mandi marah
