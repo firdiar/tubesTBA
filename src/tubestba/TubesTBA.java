@@ -71,42 +71,9 @@ public class TubesTBA {
         }
         
         
-        if(current != null){
-            System.out.println("Kata Diterima : "+current.isFinal());
-        }else{
-            System.out.println("Kata Diterima : false");
-        }
         
-        
-       
-        
-        
-        
-        
-//        stack.clear();
-//        stack.add('#');
-//        stack.add('S');
-//        processStack(stack, Character.MIN_VALUE , stack.pop());
-//        
-//        
-//        
-//        boolean stillCan = true;
-//        int j = 0;
-//        //System.out.println(processStack(stack, "s" , stack.pop()));
-//        while(stillCan && j<kata.size()){
-//            stillCan = processStack(stack, tokenRecognizer(kata.get(j)) , stack.pop());
-//            j++;
-//        }
-//        
-//        
-//        boolean isAccepted = false;
-//        if(stillCan){
-//            emptyStack(stack);
-//            isAccepted = stack.isEmpty();
-//        }
-//        
-//        System.out.println("Kata Di Terima : "+isAccepted);
-        
+        System.out.println("Kata Diterima : "+(current != null?current.isFinal():false));
+              
     }
     
     public static Character tokenRecognizer(String kata){
@@ -155,40 +122,7 @@ public class TubesTBA {
     }
     
 
-    
-    //fungsi yang berisikan automata untuk mengecek CFG dari kalimat
-//    public static boolean processStack(Stack<Character> stack , Character input , Character pop){
-//        if(input.equals(Character.MIN_VALUE) && pop.equals('S')){
-//            stack.add('X');
-//            stack.add('p');
-//            stack.add('s');
-//            return true;
-//        }else if(pop.equals('X')){
-//            if(input .equals( 'o')){
-//                stack.add('Y');
-//                return true;
-//            }else if(input.equals('k')){
-//                
-//                return true;
-//            }else if(input.equals(Character.MIN_VALUE)){
-//                return true;
-//            }
-//            return false;
-//        }else if(pop.equals('Y')){
-//            if(input.equals(Character.MIN_VALUE)){
-//                return true;
-//            }else if(input.equals( 'k')){
-//                
-//                return true;
-//            }
-//            return false;
-//        }else if(Character.isLowerCase(input) && input.equals( pop)){
-//            return true;
-//        }
-//        
-//        return false;
-//    
-//    }
+ 
     public static boolean isAdverb(String kata){
         boolean k= false;
         
