@@ -23,16 +23,17 @@ public class TubesTBA {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Meminta Inputan User
         System.out.println("Masukan Sebuah Kalimat");
         Scanner scanner = new Scanner( System.in );
         String kalimat = scanner.nextLine();
+        
+        // Memecah Kalimat Menjadi Beberapa Kata
         List<String> kata = parseString(kalimat);
         
+        // Membuat Push Down Automata
         Stack<Character> stack = new Stack<>();
             
-        
-        
         StatePDA init = new StatePDA("I");
         StatePDA s = new StatePDA("s");
         StatePDA q0 = new StatePDA("q0");
@@ -56,6 +57,8 @@ public class TubesTBA {
         q2.addTransition(Character.MIN_VALUE, '#', "", q3);
         
         
+        
+        // Menjalankan Mesin Automata
         StatePDA current = init;
         current = current.getNext(stack, Character.MIN_VALUE, Character.MIN_VALUE);
         current = current.getNext(stack, Character.MIN_VALUE, stack.pop());
@@ -69,13 +72,13 @@ public class TubesTBA {
         while(current != null && !stack.isEmpty()){
             current = current.getNext(stack, Character.MIN_VALUE, stack.pop()); 
         }
-        
-        
-        
+        // Mengeluarkan Hasil Apakah Kalimat Diterima Atau Tidak
         System.out.println("Kata Diterima : "+(current != null?current.isFinal():false));
               
     }
     
+    
+    // Mendeteksi Sebuah Kata Adalah Subjek , Predikat , Objek atau Keterangan
     public static Character tokenRecognizer(String kata){
         if(isSubject(kata)){
             return 's';
@@ -85,21 +88,18 @@ public class TubesTBA {
             return 'k';
         }
        
-
         if(isObject(kata)){
             return 'o';
         }
   
-
         if(isPredikat(kata)){
             return 'p';
         }
 
-        return Character.MIN_VALUE;
+        return 'w';
     }
-
-
-
+    
+    // Memecah Kalimat Mendjadi Beberapa Kata
     public static List<String> parseString(String kalimat){
         kalimat = kalimat.toLowerCase();
         int i=0;
