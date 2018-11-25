@@ -22,8 +22,7 @@ public class StatePDA {
     public StatePDA(String name){
         this.name= name;
         transisi = new ArrayList<>();
-        isFinal = false;
-               
+        isFinal = false;   
     }
     public StatePDA(String name , boolean isFinal){
         this.name= name;
